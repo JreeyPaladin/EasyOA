@@ -51,6 +51,7 @@
             this.tbAccount.Name = "tbAccount";
             this.tbAccount.Size = new System.Drawing.Size(100, 21);
             this.tbAccount.TabIndex = 1;
+            this.tbAccount.Text = "zhangchan";
             // 
             // tbPassword
             // 
@@ -59,6 +60,7 @@
             this.tbPassword.PasswordChar = '*';
             this.tbPassword.Size = new System.Drawing.Size(100, 21);
             this.tbPassword.TabIndex = 2;
+            this.tbPassword.Text = "123456";
             // 
             // label1
             // 

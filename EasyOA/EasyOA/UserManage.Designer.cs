@@ -36,6 +36,8 @@
             this.dgv_UserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgv_Account = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgv_Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgv_UserType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dgv_UserTypeCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -75,7 +77,9 @@
             this.dgv_Id,
             this.dgv_UserName,
             this.dgv_Account,
-            this.dgv_Password});
+            this.dgv_Password,
+            this.dgv_UserType,
+            this.dgv_UserTypeCode});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
@@ -108,6 +112,19 @@
             this.dgv_Password.HeaderText = "密码";
             this.dgv_Password.Name = "dgv_Password";
             // 
+            // dgv_UserType
+            // 
+            this.dgv_UserType.DataPropertyName = "UserType";
+            this.dgv_UserType.HeaderText = "用户类型";
+            this.dgv_UserType.Name = "dgv_UserType";
+            // 
+            // dgv_UserTypeCode
+            // 
+            this.dgv_UserTypeCode.DataPropertyName = "UserType";
+            this.dgv_UserTypeCode.HeaderText = "UserTypeCode";
+            this.dgv_UserTypeCode.Name = "dgv_UserTypeCode";
+            this.dgv_UserTypeCode.Visible = false;
+            // 
             // UserManage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -138,5 +155,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgv_UserName;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgv_Account;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgv_Password;
+        private System.Windows.Forms.DataGridViewComboBoxColumn dgv_UserType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgv_UserTypeCode;
     }
 }

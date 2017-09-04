@@ -22,6 +22,9 @@ namespace EasyOA
 
         private void UserManage_Load(object sender, EventArgs e)
         {
+            dgv_UserType.DataSource = UserTypeData.Data;
+            dgv_UserType.DisplayMember = "Name";
+            dgv_UserType.ValueMember = "ID";
             dataGridView1.CellBeginEdit += DataGridView1_CellBeginEdit;
             DataSet ds = dal.GetList("[User]");
             dataGridView1.DataSource = ds.Tables[0];
@@ -44,24 +47,25 @@ namespace EasyOA
                 string Account = item.Cells["dgv_Account"].Value as string;
                 string Password = item.Cells["dgv_Password"].Value as string;
                 string UserName = item.Cells["dgv_UserName"].Value as string;
+                int? UserType = item.Cells["dgv_UserType"].Value as int?;
                 if (id != null && !string.IsNullOrEmpty(Account) && !string.IsNullOrEmpty(Password))
                 {
-                    SqlParameter[] parms = new SqlParameter[4];
+                    SqlParameter[] parms = new SqlParameter[5];
                     parms[0] = new SqlParameter("@Id", id);
                     parms[1] = new SqlParameter("@Account", Account);
                     parms[2] = new SqlParameter("@Password", Password);
                     parms[3] = new SqlParameter("@UserName", UserName);
+                    parms[4] = new SqlParameter("@UserType", UserType);
                     if (dt.Select("Id=" + id.Value).Count() > 0)
                     {
-                        dal.Update("[User]", "Account=@Account,Password=@Password,UserName=@UserName", "Id=@Id", parms);
+                        dal.Update("[User]", "Account=@Account,Password=@Password,UserName=@UserName,UserType=@UserType", "Id=@Id", parms);
                     }
                     else
                     {
-
                         StringBuilder strSql = new StringBuilder();
                         strSql.Append("insert into [User](");
-                        strSql.Append("Id,Account,Password,UserName)");
-                        strSql.Append(" values (@Id,@Account,@Password,@UserName)");
+                        strSql.Append("Id,Account,Password,UserName,UserType)");
+                        strSql.Append(" values (@Id,@Account,@Password,@UserName,@UserType)");
                         strSql.Append(";select @@IDENTITY");
                         object obj = dal.DbHelperSQL.GetSingle(strSql.ToString(), parms);
                     }
