@@ -1,5 +1,8 @@
-﻿using System;
+﻿using OAEntities;
+using System;
+using System.IO;
 using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 namespace ServiceUtils
@@ -44,6 +47,35 @@ namespace ServiceUtils
                     LoggerFileHelper.WriteToLogFile(string.Format("Reading data, {0} bytes ...", bytesRead));
                 }
                 if (bytesRead == 0) throw new Exception("读取到0字节");
+
+
+                MemoryStream mStream = new MemoryStream();
+                mStream.Position = 0;
+                mStream.Write(buffer, 0, bytesRead); //将接收到的数据写入内存流  
+                mStream.Flush();
+                mStream.Position = 0;
+
+                BinaryFormatter bFormatter = new BinaryFormatter();
+                BaseEntity baseObj = (BaseEntity)bFormatter.Deserialize(mStream);
+
+                switch (baseObj.Action.ToLower())
+                {
+                    case "login":
+                        string tempMsg = "";
+                        User user = baseObj.Data as User;
+                        if (DAL.Login(user.Account, user.Password))
+                        {
+                            tempMsg = Format("login|true");
+                        }
+                        else
+                        {
+                            tempMsg = Format("login|false");
+                        }
+                        SendMessage(tempMsg);
+                        break;
+                }
+                
+
 
                 string msg = Encoding.Unicode.GetString(buffer, 0, bytesRead);
                 Array.Clear(buffer, 0, buffer.Length);        // 清空缓存，避免脏读
