@@ -15,7 +15,7 @@ namespace EasyOA
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new UserManage());
+            Application.Run(new Login());
         }
     }
 }
