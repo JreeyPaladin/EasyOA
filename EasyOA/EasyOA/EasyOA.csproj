@@ -59,11 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\CommandInfo.cs" />
-    <Compile Include="Common\DbHelperSQLP.cs" />
-    <Compile Include="Common\DALHelper.cs" />
-    <Compile Include="Common\RequestHandler.cs" />
-    <Compile Include="Common\ServerClient.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,20 +110,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="OADB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="OADB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>OADB.mdf</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OAEntities\OAEntities.csproj">
+      <Project>{2ab2db4f-fa67-4bed-a61e-e054dcde541d}</Project>
+      <Name>OAEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceUtils\ServiceUtils.csproj">
+      <Project>{9aa98d5b-c8d3-40ce-b59c-31395ca61bee}</Project>
+      <Name>ServiceUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

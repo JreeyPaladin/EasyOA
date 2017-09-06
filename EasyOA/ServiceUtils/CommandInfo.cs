@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
-namespace EasyOA.Common
+namespace ServiceUtils
 {
     /// <summary>
     /// Command

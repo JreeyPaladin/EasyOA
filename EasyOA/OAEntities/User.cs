@@ -5,6 +5,7 @@ using System.Text;
 
 namespace OAEntities
 {
+    [Serializable]
     public class User 
     {
         public int ID { get; set; }

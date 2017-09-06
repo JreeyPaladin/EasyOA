@@ -1,5 +1,4 @@
-﻿using EasyOA.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -14,7 +13,6 @@ namespace EasyOA
 {
     public partial class UserManage : Form
     {
-        DALHelper dal = new DALHelper(ConfigurationManager.ConnectionStrings["OADBConnectionString"].ConnectionString);
         public UserManage()
         {
             InitializeComponent();
@@ -26,8 +24,8 @@ namespace EasyOA
             dgv_UserType.DisplayMember = "Name";
             dgv_UserType.ValueMember = "ID";
             dataGridView1.CellBeginEdit += DataGridView1_CellBeginEdit;
-            DataSet ds = dal.GetList("[User]");
-            dataGridView1.DataSource = ds.Tables[0];
+            //DataSet ds = dal.GetList("[User]");
+            //dataGridView1.DataSource = ds.Tables[0];
         }
 
         private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
@@ -58,7 +56,7 @@ namespace EasyOA
                     parms[4] = new SqlParameter("@UserType", UserType);
                     if (dt.Select("Id=" + id.Value).Count() > 0)
                     {
-                        dal.Update("[User]", "Account=@Account,Password=@Password,UserName=@UserName,UserType=@UserType", "Id=@Id", parms);
+                        //dal.Update("[User]", "Account=@Account,Password=@Password,UserName=@UserName,UserType=@UserType", "Id=@Id", parms);
                     }
                     else
                     {
@@ -67,7 +65,7 @@ namespace EasyOA
                         strSql.Append("Id,Account,Password,UserName,UserType)");
                         strSql.Append(" values (@Id,@Account,@Password,@UserName,@UserType)");
                         strSql.Append(";select @@IDENTITY");
-                        object obj = dal.DbHelperSQL.GetSingle(strSql.ToString(), parms);
+                        //object obj = dal.DbHelperSQL.GetSingle(strSql.ToString(), parms);
                     }
                 }
             }

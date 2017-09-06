@@ -4,12 +4,10 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 
-namespace EasyOA.Common
+namespace ServiceUtils
 {
     /// <summary>
     /// 数据访问抽象基础类
-    /// 楚骓科技 龙.项目助手数据库操作类
-    /// Copyright (C) cqchuzhui.com
     /// </summary>
     public class DbHelperSQLP
     {

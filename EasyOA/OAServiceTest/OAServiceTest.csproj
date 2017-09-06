@@ -44,13 +44,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="User.dat" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\OAEntities\OAEntities.csproj">
+      <Project>{2ab2db4f-fa67-4bed-a61e-e054dcde541d}</Project>
+      <Name>OAEntities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ServiceUtils\ServiceUtils.csproj">
       <Project>{9aa98d5b-c8d3-40ce-b59c-31395ca61bee}</Project>
       <Name>ServiceUtils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

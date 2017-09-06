@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
 
-namespace EasyOA.Common
+namespace ServiceUtils
 {
     /// <summary>
     /// 数据库常用操作帮助类

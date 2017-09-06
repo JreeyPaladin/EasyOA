@@ -1,20 +1,14 @@
-﻿using EasyOA.Common;
+﻿using OAEntities;
+using ServiceUtils.Sockets;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Net.Sockets;
 using System.Windows.Forms;
 
 namespace EasyOA
 {
     public partial class Login : Form
     {
-        DALHelper dal = new DALHelper(ConfigurationManager.ConnectionStrings["OADBConnectionString"].ConnectionString);
+        TcpClientPlus tcpClient = new TcpClientPlus("127.0.0.1", 8500);
         public Login()
         {
             InitializeComponent();
@@ -22,39 +16,85 @@ namespace EasyOA
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string account = tbAccount.Text.Trim();
-            string password = tbPassword.Text.Trim();
-
-            ServerClient client = new ServerClient();
-            string sendMsg = client.Format(string.Format("login|{0}|{1}", account, password));
-            if (client.SendMessage(sendMsg) == "true")
+            if (!tcpClient.ThreadTaskAllocation(HandleClientComm))
             {
-                this.Hide();
-                UserManage um = new UserManage();
-                um.ShowDialog();
-                this.Close();
+                MessageBox.Show("通信信道忙！");
+            }
+        }
+        private void HandleClientComm(object sender, EventArgs e)
+        {
+            TcpClientPlus client = sender as TcpClientPlus;
+            if (client != null)
+            {
+                try
+                {
+                    User user = new User()
+                    {
+                        Account = GetAccount(),
+                        Password = GetPassword()
+                    };
+                    BaseEntity sendBase = new BaseEntity("login", user);
+                    string receive;
+                    client.Query(SerializePlus.FormatterObjectBytes(sendBase), out receive);
+                    if (receive == "true")
+                    {
+                        this.Invoke(new Action(this.Hide));
+                        this.Invoke(new Action(this.ShowWindow));
+                        this.Invoke(new Action(this.Close));
+                    }
+                    else
+                    {
+                        MessageBox.Show("登录名或密码错误！");
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    Type type = ex.GetType();
+                    if (type == typeof(SocketException) || type == typeof(System.IO.IOException))
+                    {   // 连接中断  
+                        client.Close();
+                        //MessageBoxPlus.Show(this, "连接中断！", "信息");
+                    }
+                    else
+                    {
+                        //SetNote("操作失败异常原因：" + type.Name + "\r\n\r\n");
+                    }
+                }
+            }
+        }
+        // 对 Windows 窗体控件进行线程安全调用  
+        private string GetAccount()
+        {
+            if (tbAccount.InvokeRequired)
+            {
+                return (string)tbAccount.Invoke(new Func<string>(() => { return tbAccount.Text; }));
             }
             else
             {
-                MessageBox.Show("登录名或密码错误！");
+                return tbAccount.Text;
             }
-
-
-
-            //SqlParameter[] parms = new SqlParameter[2];
-            //parms[0] = new SqlParameter("@Account", account);
-            //parms[1] = new SqlParameter("@Password", password);
-            //if (dal.GetRecordCount("[User]", "Account=@Account and Password=@Password", parms) > 0)
-            //{
-            //    this.Hide();
-            //    UserManage um = new UserManage();
-            //    um.ShowDialog();
-            //    this.Close();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("登录名或密码错误！");
-            //}
+        }
+        private string GetPassword()
+        {
+            if (tbPassword.InvokeRequired)
+            {
+                return (string)tbPassword.Invoke(new Func<string>(() => { return tbPassword.Text; }));
+            }
+            else
+            {
+                return tbPassword.Text;
+            }
+        }
+        private void ShowWindow()
+        {
+            UserManage um = new UserManage();
+            um.ShowDialog();
+        }
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            tcpClient.Close();
+            base.OnFormClosed(e);
         }
     }
 }
