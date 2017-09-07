@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.btnLogin = new System.Windows.Forms.Button();
-            this.tbAccount = new System.Windows.Forms.TextBox();
+            this.tbUserName = new System.Windows.Forms.TextBox();
             this.tbPassword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -45,13 +45,13 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // tbAccount
+            // tbUserName
             // 
-            this.tbAccount.Location = new System.Drawing.Point(134, 71);
-            this.tbAccount.Name = "tbAccount";
-            this.tbAccount.Size = new System.Drawing.Size(100, 21);
-            this.tbAccount.TabIndex = 1;
-            this.tbAccount.Text = "zhangchan";
+            this.tbUserName.Location = new System.Drawing.Point(134, 71);
+            this.tbUserName.Name = "tbUserName";
+            this.tbUserName.Size = new System.Drawing.Size(100, 21);
+            this.tbUserName.TabIndex = 1;
+            this.tbUserName.Text = "zhangchan";
             // 
             // tbPassword
             // 
@@ -88,7 +88,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbPassword);
-            this.Controls.Add(this.tbAccount);
+            this.Controls.Add(this.tbUserName);
             this.Controls.Add(this.btnLogin);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(368, 281);
@@ -105,7 +105,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.TextBox tbAccount;
+        private System.Windows.Forms.TextBox tbUserName;
         private System.Windows.Forms.TextBox tbPassword;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

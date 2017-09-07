@@ -20,10 +20,10 @@ namespace EasyOA
 
         private void UserManage_Load(object sender, EventArgs e)
         {
-            dgv_UserType.DataSource = UserTypeData.Data;
-            dgv_UserType.DisplayMember = "Name";
-            dgv_UserType.ValueMember = "ID";
-            dataGridView1.CellBeginEdit += DataGridView1_CellBeginEdit;
+            //dgv_UserType.DataSource = TaskStatus.Data;
+            //dgv_UserType.DisplayMember = "Name";
+            //dgv_UserType.ValueMember = "ID";
+            //dataGridView1.CellBeginEdit += DataGridView1_CellBeginEdit;
             //DataSet ds = dal.GetList("[User]");
             //dataGridView1.DataSource = ds.Tables[0];
         }

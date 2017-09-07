@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ServiceUtils.Sockets
 {
-    public class SerializePlus
+    public static class SerializePlus
     {
         /// <summary>
         /// 将对象序列化为byte[]
@@ -13,7 +13,7 @@ namespace ServiceUtils.Sockets
         /// </summary>
         /// <param name="obj">需要序列化的对象</param>
         /// <returns>序列化获取的二进制流</returns>
-        public static byte[] FormatterObjectBytes(object obj)
+        public static byte[] SerializeToBytes(this object obj)
         {
             if (obj == null)
                 throw new ArgumentNullException("obj");
@@ -25,7 +25,6 @@ namespace ServiceUtils.Sockets
                     BinaryFormatter iFormatter = new BinaryFormatter();
                     iFormatter.Serialize(ms, obj);
                     buff = ms.GetBuffer();
-                    Console.WriteLine("buff：{0}", Encoding.UTF8.GetString(buff, 0, buff.Length));
                 }
             }
             catch (Exception er)
@@ -39,7 +38,7 @@ namespace ServiceUtils.Sockets
         /// </summary>
         /// <param name="buff"></param>
         /// <returns></returns>
-        public static object FormatterByteObject(byte[] buff)
+        public static object DeserializeToObject(this byte[] buff)
         {
             if (buff == null)
                 throw new ArgumentNullException("buff");

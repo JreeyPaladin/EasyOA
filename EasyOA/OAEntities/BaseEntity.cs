@@ -11,6 +11,10 @@ namespace OAEntities
         public string Action { get; set; }
         public object Data { get; set; }
         public BaseEntity() { }
+        public BaseEntity(string action)
+        {
+            Action = action;
+        }
         public BaseEntity(string action,object data) {
             Action = action;
             Data = data;

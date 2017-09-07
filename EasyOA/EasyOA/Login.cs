@@ -1,6 +1,7 @@
 ﻿using OAEntities;
 using ServiceUtils.Sockets;
 using System;
+using System.Configuration;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
@@ -8,7 +9,7 @@ namespace EasyOA
 {
     public partial class Login : Form
     {
-        TcpClientPlus tcpClient = new TcpClientPlus("127.0.0.1", 8500);
+        protected TcpClientPlus tcpClient = new TcpClientPlus(AppConfig.IP, AppConfig.Port);
         public Login()
         {
             InitializeComponent();
@@ -30,12 +31,12 @@ namespace EasyOA
                 {
                     User user = new User()
                     {
-                        Account = GetAccount(),
+                        UserName = GetUserName(),
                         Password = GetPassword()
                     };
                     BaseEntity sendBase = new BaseEntity("login", user);
                     string receive;
-                    client.Query(SerializePlus.FormatterObjectBytes(sendBase), out receive);
+                    client.Query(sendBase.SerializeToBytes(), out receive);
                     if (receive == "true")
                     {
                         this.Invoke(new Action(this.Hide));
@@ -64,15 +65,15 @@ namespace EasyOA
             }
         }
         // 对 Windows 窗体控件进行线程安全调用  
-        private string GetAccount()
+        private string GetUserName()
         {
-            if (tbAccount.InvokeRequired)
+            if (tbUserName.InvokeRequired)
             {
-                return (string)tbAccount.Invoke(new Func<string>(() => { return tbAccount.Text; }));
+                return (string)tbUserName.Invoke(new Func<string>(() => { return tbUserName.Text; }));
             }
             else
             {
-                return tbAccount.Text;
+                return tbUserName.Text;
             }
         }
         private string GetPassword()
@@ -88,8 +89,8 @@ namespace EasyOA
         }
         private void ShowWindow()
         {
-            UserManage um = new UserManage();
-            um.ShowDialog();
+            Main main = new Main();
+            main.ShowDialog();
         }
         protected override void OnFormClosed(FormClosedEventArgs e)
         {

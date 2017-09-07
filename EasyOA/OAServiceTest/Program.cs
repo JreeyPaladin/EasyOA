@@ -31,30 +31,36 @@ namespace OAServiceTest
                     try
                     {
                         // 获取查询内容  
-                        String Question;
                         BaseEntity answerBase;
                         byte[] answer;
-                        //Stream.Read(out Question);
                         Stream.Read(out answer);
-                        answerBase = (BaseEntity)SerializePlus.FormatterByteObject(answer);
+                        answerBase = (BaseEntity)answer.DeserializeToObject();
+                        if (answerBase != null)
+                        {
+                            switch (answerBase.Action.ToLower())
+                            {
+                                case "login":
+                                    User user = answerBase.Data as User;
+                                    Stream.Write(dal.Login(user.UserName, user.Password).ToString().ToLower());
+                                    break;
+                                case "getrole": break;
+                                case "getuserlist":
+                                    Stream.Write(dal.GetUserList().SerializeToBytes());
+                                    break;
+                                case "gettasklist":
+                                    Stream.Write(dal.GetTaskList(answerBase.Data as Task).SerializeToBytes());
+                                    break;
+                                case "addtask":
+                                    Task task = answerBase.Data as Task;
+                                    Stream.Write(dal.AddTask(task).ToString().ToLower());
+                                    break;
+                            }
 
-                        User user = answerBase.Data as User;
-                        if (dal.Login(user.Account, user.Password))
-                        {
-                            Stream.Write("true");
+
                         }
-                        else
-                        {
-                            Stream.Write("false");
-                        }
-                        // 返回查询结果  
-                        //String Answer = Question.ToUpper();
-                        //Stream.Write(Answer);
 
                         //Console.Write(Question + "\r\n");
                         //Console.Write(Answer + "\r\n\r\n");
-                        Console.Write(user.Account + "\r\n\r\n");
-                        Console.Write(user.Password + "\r\n\r\n");
                     }
 
                     catch (Exception ex)
