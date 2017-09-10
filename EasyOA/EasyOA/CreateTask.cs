@@ -24,7 +24,7 @@ namespace EasyOA
             {
                 TaskName = tbTaskName.Text,
                 TaskContent = tbTaskContent.Text,
-                TaskStatus = TaskStatus.未分配.ToString(),
+                TaskStatus = TaskStatus.进行中.ToString(),
                 CreateTime = DateTime.Now,
                 UserName = cmbUser.SelectedValue as string
             };

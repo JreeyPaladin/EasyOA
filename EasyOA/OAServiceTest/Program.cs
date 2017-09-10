@@ -41,9 +41,20 @@ namespace OAServiceTest
                             {
                                 case "login":
                                     User user = answerBase.Data as User;
-                                    Stream.Write(dal.Login(user.UserName, user.Password).ToString().ToLower());
+                                    Stream.Write(dal.Login(user.UserName, user.Password).SerializeToBytes());
                                     break;
                                 case "getrole": break;
+                                case "getrolelist":
+                                    Stream.Write(dal.GetRoleList().SerializeToBytes());
+                                    break;
+                                case "adduser":
+                                    User userAdd = answerBase.Data as User;
+                                    Stream.Write(dal.AddOrUpdateUser(userAdd).ToString().ToLower());
+                                    break;
+                                case "deluser":
+                                    string ids = answerBase.Data as string;
+                                    Stream.Write(dal.DelUser(ids).ToString().ToLower());
+                                    break;
                                 case "getuserlist":
                                     Stream.Write(dal.GetUserList().SerializeToBytes());
                                     break;
@@ -54,6 +65,10 @@ namespace OAServiceTest
                                     Task task = answerBase.Data as Task;
                                     Stream.Write(dal.AddTask(task).ToString().ToLower());
                                     break;
+                                case "finishtask":
+                                    Stream.Write(dal.FinishTask((int)answerBase.Data).ToString().ToLower());
+                                    break;
+
                             }
 
 

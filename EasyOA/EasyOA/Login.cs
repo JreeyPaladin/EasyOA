@@ -10,6 +10,7 @@ namespace EasyOA
     public partial class Login : Form
     {
         protected TcpClientPlus tcpClient = new TcpClientPlus(AppConfig.IP, AppConfig.Port);
+        User LoginUser = new User();
         public Login()
         {
             InitializeComponent();
@@ -35,9 +36,10 @@ namespace EasyOA
                         Password = GetPassword()
                     };
                     BaseEntity sendBase = new BaseEntity("login", user);
-                    string receive;
+                    byte[] receive;
                     client.Query(sendBase.SerializeToBytes(), out receive);
-                    if (receive == "true")
+                    LoginUser = receive.DeserializeToObject() as User;
+                    if (LoginUser.Id > 0)
                     {
                         this.Invoke(new Action(this.Hide));
                         this.Invoke(new Action(this.ShowWindow));
@@ -89,7 +91,7 @@ namespace EasyOA
         }
         private void ShowWindow()
         {
-            Main main = new Main();
+            Main main = new Main(LoginUser);
             main.ShowDialog();
         }
         protected override void OnFormClosed(FormClosedEventArgs e)
